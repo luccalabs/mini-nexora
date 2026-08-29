@@ -1,5 +1,22 @@
-def cadastrar_eventos():
-    events = []
+import json
+
+def carregar_eventos():
+    try:
+        with open('eventos.json','r') as arquivo:
+            data = json.load(arquivo)
+            return data
+    except FileNotFoundError:
+        return []
+
+
+events = carregar_eventos()
+
+
+def salvar_eventos(events):
+    with open ('eventos.json', 'w') as arquivo:
+        json.dump(events, arquivo, indent=4)
+
+def cadastrar_eventos(events):
     evento = int(input('Quantos eventos deseja cadastrar ? '))
     for _ in range(evento):
         tipo = input('tipo: ')
@@ -18,11 +35,15 @@ def cadastrar_eventos():
         events.append(info)
     return events
 
-events = cadastrar_eventos()
-
-    
 
 
+events = cadastrar_eventos(events)
+
+salvar_eventos(events)
+
+
+
+   
 def exibir_eventos(events):
     print("===Eventos===")
     for posicao, eventin in enumerate(events, 1):
@@ -73,3 +94,6 @@ exibir_alertas(events)
 
 
 print('Programa Encerrado!')
+
+
+
